@@ -1,0 +1,8 @@
+library(gdata)
+library(ggplot2)
+r = read.csv("ATP2014_clean.csv",header=TRUE)
+f = glm(formula=LowerRankWon~WinnerWonFirstSet,family='binomial',data=r)
+summary(f)
+ggplot(r,aes(x=WinnerWonFirstSet,y=LowerRankWon))+geom_point()+stat_smooth(method="glm",family="binomial",se=FALSE)
+plot(r$WinnerWonFirstSet,r$LowerRankWon)
+curve(predict(f,data.frame(WinnerWonFirstSet=x),type="response"),add=TRUE)
